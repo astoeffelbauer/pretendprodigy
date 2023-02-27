@@ -6,11 +6,11 @@ import random
 st.title("Pretend Prodigy")
 st.markdown(
     """
-    *Welcome to Pretend Prodigy, a ChatGPT powered "board game" where your goal is to 
-    fool everyone else into believing your made up answers to impossible questions.*
+    *Welcome to Pretend Prodigy, a ChatGPT powered game to play at home where 
+    your goal is to fool everyone else into believing your made up answers to impossible questions.*
 
-    *Well it's not yet powered by ChatGPT but instead uses a mix of AI-generated and 
-    self-made prompts.*
+    *Actually it's not yet powered by ChatGPT but instead by a mix of AI-generated and 
+    self-made prompts stored in a file, but TBD.*
     """
 )
 
@@ -44,7 +44,7 @@ with st.expander("Expand to See Game Rules"):
 
         There are different kinds of prompts, with "Obscure Words" being only one of them. The prompt can come from different categories such as History, Movie Plots, Famous People, or Weird Professions. And may require you to change the style of your response accordingly to fit the prompt.
 
-        The moderator can either pick a category or let the AI decide randomly.
+        The moderator can either pick a category or let the AI decide randomly.
         """
     )
 
@@ -62,14 +62,14 @@ st.write("")
 
 tab1, tab2, tab3 = st.tabs(["Moderator View", "Prompt Only View", "Under the Hood"])
 
-def get_random_prompt(category):
+def get_random_prompt(df, category):
     if category == "Surprise Me":
         return df.sample(1)
     else:
         subset = df[df.category==category]
         return subset.sample(1)
 
-prompt = get_random_prompt(category)
+prompt = get_random_prompt(df, category)
 
 with tab1:
     # Filter the dataframe to only show prompts from the selected category
@@ -89,7 +89,7 @@ with tab3:
     st.markdown(f"""
         #### The Role of ChatGPT
 
-        Interested in knowing how we can make an AI come up with new prompts and answers for the game?
+        Interested in knowing how we make ChatGPT come up with new prompts and answers for the game?
 
         We use so-called *in-context learning* to help the AI understand what kind of response we 
         would like to receive. In other words, by providing not only the task but also some 
